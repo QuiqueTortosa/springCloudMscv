@@ -1,6 +1,6 @@
 package org.entorha.springcloud.msvc.cursos.services.impls;
 
-import org.entorha.springcloud.msvc.cursos.entities.Curso;
+import org.entorha.springcloud.msvc.cursos.models.entities.Curso;
 import org.entorha.springcloud.msvc.cursos.repositories.CursoRepository;
 import org.entorha.springcloud.msvc.cursos.services.interfaces.CursoService;
 import org.springframework.beans.factory.annotation.Autowired;

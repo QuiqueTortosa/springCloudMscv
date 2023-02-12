@@ -1,6 +1,6 @@
 package org.entorha.springcloud.msvc.cursos.services.interfaces;
 
-import org.entorha.springcloud.msvc.cursos.entities.Curso;
+import org.entorha.springcloud.msvc.cursos.models.entities.Curso;
 
 import java.util.List;
 import java.util.Optional;

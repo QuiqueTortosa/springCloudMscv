@@ -1,7 +1,7 @@
 package org.entorha.springcloud.msvc.cursos.controllers;
 
 import jakarta.validation.Valid;
-import org.entorha.springcloud.msvc.cursos.entities.Curso;
+import org.entorha.springcloud.msvc.cursos.models.entities.Curso;
 import org.entorha.springcloud.msvc.cursos.services.interfaces.CursoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
