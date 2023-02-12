@@ -3,11 +3,9 @@ package org.entorha.springcloud.msvc.cursos.controllers;
 import org.entorha.springcloud.msvc.cursos.entities.Curso;
 import org.entorha.springcloud.msvc.cursos.services.interfaces.CursoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,5 +34,28 @@ public class CursoController {
                 ResponseEntity.notFound().build();
     }
 
+    @PostMapping("/")
+    public ResponseEntity<?> crear(@RequestBody Curso curso) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(cursoService.save(curso));
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<?> editar(@RequestBody Curso curso, @PathVariable Long id) {
+        Optional<Curso> o = cursoService.findById(id);
+        curso.setId(o.get().getId());
+        return o.isPresent() ?
+                ResponseEntity.status(HttpStatus.CREATED).body(cursoService.save(curso)) :
+                ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> eliminar(@PathVariable Long id){
+        Optional<Curso> o = cursoService.findById(id);
+        if(o.isPresent()) {
+            cursoService.delete(id);
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
 
 }
