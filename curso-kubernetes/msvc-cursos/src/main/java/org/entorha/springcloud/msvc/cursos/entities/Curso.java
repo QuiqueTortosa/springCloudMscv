@@ -1,6 +1,7 @@
 package org.entorha.springcloud.msvc.cursos.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name="cursos")
@@ -10,6 +11,7 @@ public class Curso {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotEmpty(message = "Nombre cannot be empty")
     private String nombre;
 
     public Long getId() {

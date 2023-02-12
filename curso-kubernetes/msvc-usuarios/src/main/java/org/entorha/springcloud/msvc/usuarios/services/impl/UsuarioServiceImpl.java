@@ -33,6 +33,11 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
+    public Optional<Usuario> findByEmail(String email) {
+        return usuarioRepository.findByEmail(email);
+    }
+
+    @Override
     @Transactional
     public Usuario saveUser(Usuario usuario) {
         return usuarioRepository.save(usuario);

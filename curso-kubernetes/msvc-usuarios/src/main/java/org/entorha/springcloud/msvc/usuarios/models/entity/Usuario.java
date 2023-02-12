@@ -1,6 +1,9 @@
 package org.entorha.springcloud.msvc.usuarios.models.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name="usuarios")
@@ -10,11 +13,15 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Message cannot be empty")
     private String nombre;
 
+    @NotBlank(message = "Email cannot be empty")
+    @Email
     @Column(unique = true)
     private String email;
 
+    @NotBlank(message = "Password cannot be empty")
     private String password;
 
     public Long getId() {

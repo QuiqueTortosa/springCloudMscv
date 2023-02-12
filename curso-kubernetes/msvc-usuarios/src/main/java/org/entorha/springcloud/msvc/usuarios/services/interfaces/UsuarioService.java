@@ -11,6 +11,8 @@ public interface UsuarioService {
 
     Optional<Usuario> findById(Long id);
 
+    Optional<Usuario> findByEmail(String email);
+
     Usuario saveUser(Usuario usuario);
 
     void deleteUser(Long id);
