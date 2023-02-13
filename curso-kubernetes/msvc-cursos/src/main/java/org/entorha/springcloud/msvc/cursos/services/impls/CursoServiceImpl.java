@@ -1,6 +1,9 @@
 package org.entorha.springcloud.msvc.cursos.services.impls;
 
+import org.entorha.springcloud.msvc.cursos.clients.UsuarioClientRest;
+import org.entorha.springcloud.msvc.cursos.models.Usuario;
 import org.entorha.springcloud.msvc.cursos.models.entities.Curso;
+import org.entorha.springcloud.msvc.cursos.models.entities.CursoUsuario;
 import org.entorha.springcloud.msvc.cursos.repositories.CursoRepository;
 import org.entorha.springcloud.msvc.cursos.services.interfaces.CursoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +17,12 @@ import java.util.Optional;
 public class CursoServiceImpl implements CursoService {
 
     private final CursoRepository cursoRepository;
+    private final UsuarioClientRest clientRest;
 
     @Autowired
-    public CursoServiceImpl(CursoRepository cursoRepository) {
+    public CursoServiceImpl(CursoRepository cursoRepository, UsuarioClientRest clientRest) {
         this.cursoRepository = cursoRepository;
+        this.clientRest = clientRest;
     }
 
     @Override
@@ -42,5 +47,61 @@ public class CursoServiceImpl implements CursoService {
     @Transactional
     public void delete(Long id) {
         cursoRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public Optional<Usuario> asignarUsuario(Long usuarioId, Long cursoId) {
+        Optional<Curso> o = cursoRepository.findById(cursoId);
+        if(o.isPresent()) {
+            Usuario usuarioMsvc = clientRest.listarUsuario(usuarioId);
+
+            Curso curso =  o.get();
+            CursoUsuario cursoUsuario = new CursoUsuario();
+            cursoUsuario.setUsuarioId(usuarioMsvc.getId());
+
+            curso.addCursoUsuario(cursoUsuario);
+            cursoRepository.save(curso);
+
+            return Optional.of(usuarioMsvc);
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    @Transactional
+    public Optional<Usuario> crearUsuario(Usuario usuario, Long cursoId) {
+        Optional<Curso> o = cursoRepository.findById(cursoId);
+        if(o.isPresent()) {
+            Usuario usuarioNuevoMsvc = clientRest.crearUsuario(usuario);
+
+            Curso curso =  o.get();
+            CursoUsuario cursoUsuario = new CursoUsuario();
+            cursoUsuario.setUsuarioId(usuarioNuevoMsvc.getId());
+
+            curso.addCursoUsuario(cursoUsuario);
+            cursoRepository.save(curso);
+
+            return Optional.of(usuarioNuevoMsvc);
+        }
+        return Optional.empty();    }
+
+    @Override
+    @Transactional
+    public Optional<Usuario> eliminarUsuario(Long usuarioId, Long cursoId) {
+        Optional<Curso> o = cursoRepository.findById(cursoId);
+        if(o.isPresent()) {
+            Usuario usuarioMsvc = clientRest.listarUsuario(usuarioId);
+
+            Curso curso =  o.get();
+            CursoUsuario cursoUsuario = new CursoUsuario();
+            cursoUsuario.setUsuarioId(usuarioMsvc.getId());
+
+            curso.removeCursoUsuario(cursoUsuario);
+            cursoRepository.save(curso);
+
+            return Optional.of(usuarioMsvc);
+        }
+        return Optional.empty();
     }
 }
