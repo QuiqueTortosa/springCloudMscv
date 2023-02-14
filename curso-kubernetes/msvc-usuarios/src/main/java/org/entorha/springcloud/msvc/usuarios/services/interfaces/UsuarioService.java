@@ -11,6 +11,8 @@ public interface UsuarioService {
 
     Optional<Usuario> findById(Long id);
 
+    List<Usuario> findAllByIds(Iterable<Long> ids);
+
     Optional<Usuario> findByEmail(String email);
 
     Usuario saveUser(Usuario usuario);

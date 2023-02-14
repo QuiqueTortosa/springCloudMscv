@@ -36,6 +36,11 @@ public class UsuarioController {
                 ResponseEntity.notFound().build();
     }
 
+    @GetMapping("/usuarios-curso")
+    public ResponseEntity<?> listarUsuariosPorCursos(@RequestParam List<Long> ids){
+        return ResponseEntity.ok(usuarioService.findAllByIds(ids));
+    }
+
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> crearUsuario(@Valid @RequestBody Usuario usuario, BindingResult result){ //Resultado de la validacion -> BindingResult
