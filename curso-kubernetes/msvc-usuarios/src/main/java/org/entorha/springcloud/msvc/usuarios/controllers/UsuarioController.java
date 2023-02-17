@@ -48,7 +48,7 @@ public class UsuarioController {
             return validar(result);
         }
         if(usuarioService.findByEmail(usuario.getEmail()).isPresent()) {
-            return ResponseEntity.badRequest().body(Collections.singletonMap("message", "User with that email already exists"));
+            return ResponseEntity.badRequest().body(Collections.singletonMap("message", "User with that email already exists!!!!"));
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.saveUser(usuario));
     }
