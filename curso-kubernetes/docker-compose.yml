@@ -27,9 +27,10 @@ services:
 
   msvc-usuarios:
     container_name: msvc-usuarios
-    build:
-      context: ./ #La raiz, el punto de partida
-      dockerfile: ./msvc-usuarios/Dockerfile #Solo las crea si no estan creadas
+    image: toxxii/usuarios:latest
+#    build:
+#      context: ./ #La raiz, el punto de partida
+#      dockerfile: ./msvc-usuarios/Dockerfile #Solo las crea si no estan creadas
     ports:
       - "8001:8001"
     env_file: ./msvc-usuarios/.env
@@ -41,9 +42,10 @@ services:
 
   msvc-cursos:
     container_name: msvc-cursos
-    build:
-      context: ./ #La raiz, el punto de partida
-      dockerfile: ./msvc-cursos/Dockerfile #Solo las crea si no estan creadas
+    image: toxxii/cursos:latest
+#    build:
+#      context: ./ #La raiz, el punto de partida
+#      dockerfile: ./msvc-cursos/Dockerfile #Solo las crea si no estan creadas
     ports:
       - "8002:8002"
     env_file:
