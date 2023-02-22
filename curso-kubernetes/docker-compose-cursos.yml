@@ -1,0 +1,43 @@
+version: "3.9"  # Version de docker-compose, afecta a las funcionalidades
+services:
+  postgres14:
+    image: postgres:14-alpine
+    ports:
+      - "5532:5432"
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: msvc_cursos
+    volumes:
+      - data-postgres:/var/lib/postgresql/data
+    restart: always
+    networks:
+      - spring
+  msvc-cursos:
+    container_name: msvc-cursos
+    image: toxxii/cursos:latest
+#    build:
+#      context: ./ #La raiz, el punto de partida
+#      dockerfile: ./msvc-cursos/Dockerfile #Solo las crea si no estan creadas
+    ports:
+      - "8002:8002"
+    environment:
+      PORT: 8002
+      DB_HOST: postgres14:5432
+      DB_DATABASE: msvc_cursos
+      DB_USERNAME: postgres
+      DB_PASSWORD: password
+      USUARIOS_URL: ec2-44-202-214-38.compute-1.amazonaws.com:8001
+    networks:
+      spring:
+    depends_on:
+      - postgres14
+    restart: always
+
+volumes:
+  data-postgres:
+    name: data-postgres
+#    external: true Te hace crear el volumen externamente
+
+networks:
+  spring:
+    name: spring
