@@ -4,10 +4,12 @@ import jakarta.validation.Valid;
 import org.entorha.springcloud.msvc.usuarios.models.entity.Usuario;
 import org.entorha.springcloud.msvc.usuarios.services.interfaces.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.context.ApplicationContext;
 
 import java.util.*;
 
@@ -16,12 +18,18 @@ import java.util.*;
 public class UsuarioController {
 
     private final UsuarioService usuarioService;
+    private final ApplicationContext context;
 
     @Autowired
-    public UsuarioController(UsuarioService usuarioService) {
+    public UsuarioController(UsuarioService usuarioService, ApplicationContext context) {
         this.usuarioService = usuarioService;
+        this.context = context;
     }
 
+    @GetMapping("/crash")
+    public void crash(){
+        ((ConfigurableApplicationContext) context).close(); //Cierra la app
+    }
 
     @GetMapping
     public Map<String, List<Usuario>> listar(){

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  # Con esto se solicita
+  name: postgres-pv
+spec:
+  capacity:
+    storage: 2Gi
+  volumeMode: Filesystem
+  storageClassName: standard # Proporciona informacion para la conf del persistant volume
+  accessModes:
+    - ReadWriteOnce
+  hostPath: # emptyDir: dentro del Pod // hostPath: fuera del pod
+    path: /var/lib/postgresql/data
+    type: DirectoryOrCreate # Si no existe esta carpeta la crea

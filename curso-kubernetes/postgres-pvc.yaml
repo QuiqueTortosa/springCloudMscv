@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-pvc
+spec:
+  volumeName: postgres-pv # mismo que en mysql-pv
+  accessModes:
+    - ReadWriteOnce # Tiene que coincidir con alguno ed mysql-pv
+  storageClassName: standard
+  resources:
+    requests:
+      storage: 2Gi
