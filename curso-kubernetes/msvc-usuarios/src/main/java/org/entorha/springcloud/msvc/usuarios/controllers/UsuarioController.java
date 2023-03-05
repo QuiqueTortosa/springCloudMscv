@@ -5,6 +5,7 @@ import org.entorha.springcloud.msvc.usuarios.models.entity.Usuario;
 import org.entorha.springcloud.msvc.usuarios.services.interfaces.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -19,11 +20,13 @@ public class UsuarioController {
 
     private final UsuarioService usuarioService;
     private final ApplicationContext context;
+    private Environment env; //Pilla variables de entorno
 
     @Autowired
-    public UsuarioController(UsuarioService usuarioService, ApplicationContext context) {
+    public UsuarioController(UsuarioService usuarioService, ApplicationContext context, Environment env) {
         this.usuarioService = usuarioService;
         this.context = context;
+        this.env = env;
     }
 
     @GetMapping("/crash")
@@ -32,8 +35,14 @@ public class UsuarioController {
     }
 
     @GetMapping
-    public Map<String, List<Usuario>> listar(){
-        return Collections.singletonMap("usuarios", usuarioService.findAll());
+    public Map<String, Object> listar(){
+        Map<String, Object> body = new HashMap<>();
+        body.put("usuarioss", usuarioService.findAll());
+        body.put("pod_info", env.getProperty("MY_POD_NAME") + ": " + env.getProperty("MY_POD_IP"));
+        body.put("texto", env.getProperty("config.texto"));
+        return body;
+        //return ResponseEntity.ok(body)
+        //return Collections.singletonMap("usuarios", usuarioService.findAll());
     }
 
     @GetMapping("/{id}")

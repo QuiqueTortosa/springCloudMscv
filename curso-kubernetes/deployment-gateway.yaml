@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: msvc-gateway # nombre del deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: msvc-gateway # COINCIDE selecciona los pods
+  template:
+    metadata:
+      labels:
+        app: msvc-gateway # COINCIDE
+    spec:
+      containers:
+        - image: toxxii/gateway:latest
+          name: msvc-gateway
+          ports:
+            - containerPort: 8090

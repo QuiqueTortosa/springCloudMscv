@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: msvc-gateway # mismo nombre que el deployment y que el nombre del application.properties
+spec:
+  ports:
+    - port: 8090 # Puerto del servicio para el trafico
+      protocol: TCP
+      targetPort: 8090 # Puerto interno
+  selector:
+    app: msvc-gateway # Selecciona los pods con la etiquita template->metadata->label->app
+  type: LoadBalancer # Para comunicacion internal
