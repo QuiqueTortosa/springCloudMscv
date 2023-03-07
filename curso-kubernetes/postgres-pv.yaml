@@ -7,9 +7,14 @@ spec:
   capacity:
     storage: 2Gi
   volumeMode: Filesystem
-  storageClassName: standard # Proporciona informacion para la conf del persistant volume
+#  storageClassName: standard # Proporciona informacion para la conf del persistant volume
+  storageClassName: "" # Proporciona informacion para la conf del persistant volume
   accessModes:
-    - ReadWriteOnce
-  hostPath: # emptyDir: dentro del Pod // hostPath: fuera del pod
-    path: /var/lib/postgresql/data
-    type: DirectoryOrCreate # Si no existe esta carpeta la crea
+#    - ReadWriteOnce
+    - ReadWriteMany
+#  hostPath: # emptyDir: dentro del Pod // hostPath: fuera del pod
+#    path: /var/lib/postgresql/data
+#    type: DirectoryOrCreate # Si no existe esta carpeta la crea
+  csi:
+    driver: efs.csi.aws.com
+    volumeHandle: fs-0c5a56e5d2a115b99

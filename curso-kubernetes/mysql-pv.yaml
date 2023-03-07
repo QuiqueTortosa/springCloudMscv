@@ -7,9 +7,14 @@ spec:
   capacity:
     storage: 2Gi
   volumeMode: Filesystem
-  storageClassName: standard # Proporciona informacion para la conf del persistant volume
+# storageClassName: standard # Proporciona informacion para la conf del persistant volume
+  storageClassName: "" # Proporciona informacion para la conf del persistant volume
   accessModes:
-    - ReadWriteOnce
-  hostPath: # emptyDir: dentro del Pod // hostPath: fuera del pod
-    path: /var/lib/mysql
-    type: DirectoryOrCreate # Si no existe esta carpeta la crea
+    - ReadWriteMany  # Para poder leer entre nodos
+#   - ReadWriteOnce
+#  hostPath: # emptyDir: dentro del Pod // hostPath: fuera del pod
+#    path: /var/lib/mysql
+#    type: DirectoryOrCreate # Si no existe esta carpeta la crea
+  csi:
+    driver: efs.csi.aws.com
+    volumeHandle: fs-09a6b3223db2937b0

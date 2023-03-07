@@ -5,8 +5,10 @@ metadata:
 spec:
   volumeName: mysql-pv # mismo que en mysql-pv
   accessModes:
-    - ReadWriteOnce # Tiene que coincidir con alguno ed mysql-pv
-  storageClassName: standard
+    - ReadWriteMany # Tiene que coincidir con alguno ed mysql-pv
+#    - ReadWriteOnce # Tiene que coincidir con alguno ed mysql-pv
+  storageClassName: ""
+#  storageClassName: standard
   resources:
     requests:
       storage: 2Gi
