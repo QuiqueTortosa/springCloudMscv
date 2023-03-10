@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: msvc-auth # nombre del deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: msvc-auth # COINCIDE selecciona los pods
+  template:
+    metadata:
+      labels:
+        app: msvc-auth # COINCIDE
+    spec:
+      containers:
+        - image: toxxii/auth:latest
+          name: msvc-auth
+          ports:
+            - containerPort: 9000
+          env:
+            - name: LB_USUARIOS_URI
+              valueFrom:
+                configMapKeyRef:
+                  name: msvc-usuarios
+                  key: lb_usuarios_uri

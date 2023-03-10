@@ -1,2 +1,6 @@
 /curso-kubernetes/.idea/
 *.properties
+*.txt
+*.csv
+*.pem
+*.msi
